@@ -57,10 +57,18 @@
         }
       }
     }
-      
+
     clearSnapshotCache() {
       if (window.Turbo) {
         Turbo.session.clearCache()
+        console.log("this.currentVisit", this.currentVisit)
+        if (Turbo.navigator.locationWithActionIsSamePage(location, options.action)) {
+           Turbo.navigator.view.scrollToAnchorFromLocation(location)
+           return
+         } else if (this.currentVisit?.location?.href === location.href) {
+           this.visitLocationWithOptionsAndRestorationIdentifier(location, options, Turbo.navigator.restorationIdentifier)
+           return
+         }
       }
     }
 
